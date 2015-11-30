@@ -1,0 +1,4 @@
+[package]
+name = "hash"
+version = "0.0.1"
+authors = ["Alexander Sukharev <asuk1979@gmail.com>"]
