@@ -1,4 +1,13 @@
 [package]
-name = "hash"
-version = "0.0.1"
-authors = ["Alexander Sukharev <asuk1979@gmail.com>"]
+name          = "hash"
+readme        = "README.md"
+license       = "GPL-3.0"
+version       = "0.0.1"
+authors       = ["Alexander Sukharev <asuk1979@gmail.com>"]
+repository    = "https://github.com/asukharev/hash-rs"
+description   = "Some hashes under one roof"
+documentation = ""
+include = [
+    "**/*.rs",
+    "Cargo.toml",
+]
