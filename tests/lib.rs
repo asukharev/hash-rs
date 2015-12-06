@@ -30,3 +30,17 @@ fn known_512_digests() {
     check_512(&[block, block].concat(), "bad62fb72bc1d1ebc117523791dd49a03a65ffd3805363e902378256d34f1d4a6c6afdad5aeaea3bfc1a92fd10c3d97d8ad6b5df85e5a0cd7eb43770356dfcc2");
     check_512(&[block, block, block].concat(), "d22e9b6978a012bcb8a6a6e44c919336d8e847994190dbdf839ba10d8fc9c231a33bab45e90b2ceaa60d117331b617309c6f9d07c7bc2aa0a54c1d4622d6388d");
 }
+
+fn check_sha1(input: &str, output: &str) {
+    let digest = hash::Digest::sha1(&input.as_bytes());
+    assert_eq!(format!("{}", digest), output);
+}
+
+#[test]
+fn known_sha1_digests() {
+    check_sha1("The quick brown fox jumps over the lazy dog", "2fd4e1c67a2d28fced849ee1bb76e7391b93eb12");
+    check_sha1("The quick brown fox jumps over the lazy cog", "de9f2c7fd25e1b3afad3e85a0bd17d9b100db4b3");
+    check_sha1("", "da39a3ee5e6b4b0d3255bfef95601890afd80709");
+    check_sha1("testing\n", "9801739daae44ec5293d4e1f53d3f4d2d426d91c");
+    check_sha1("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "025ecbd5d70f8fb3c5457cd96bab13fda305dc59");
+}

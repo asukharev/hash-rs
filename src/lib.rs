@@ -1,6 +1,7 @@
 use std::fmt;
 
 pub mod keccak;
+pub mod sha1;
 
 const OUTPUT_LEN: usize = 64;
 
@@ -9,6 +10,10 @@ pub struct Digest(pub [u8; OUTPUT_LEN]);
 impl Digest {
     pub fn keccak(m: &[u8]) -> Digest {
         keccak::from(m)
+    }
+
+    pub fn sha1(m: &[u8]) -> Digest {
+        sha1::from(m)
     }
 }
 
