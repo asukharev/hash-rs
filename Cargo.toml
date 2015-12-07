@@ -6,8 +6,12 @@ version       = "0.0.1"
 authors       = ["Alexander Sukharev <asuk1979@gmail.com>"]
 repository    = "https://github.com/asukharev/hash-rs"
 description   = "Some hashes under one roof"
+keywords      = ["Crypto", "Sha1", "Sha3", "Keccak"]
 documentation = "https://github.com/asukharev/hash-rs/blob/master/README.md"
 include = [
     "**/*.rs",
     "Cargo.toml",
 ]
+
+[lib]
+name = "hash"

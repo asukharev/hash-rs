@@ -1,6 +1,6 @@
 #![allow(unused_variables, dead_code)]
 
-extern crate hash_rs as hash;
+extern crate hash;
 
 fn check_224(input: &str, output: &str) {
 }
