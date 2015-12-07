@@ -1,7 +1,7 @@
 use std::fmt;
 
-pub mod keccak;
-pub mod sha1;
+mod keccak;
+mod sha1;
 
 const OUTPUT_LEN: usize = 64;
 
