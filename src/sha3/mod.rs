@@ -1,15 +1,12 @@
 // http://keccak.noekeon.org/Keccak-implementation-3.2.pdf
 mod consts;
-mod ext;
-use keccak::ext::XOR;
-use super::{Digest, OUTPUT_LEN};
 
-pub type State = [u64; 25];
-
+const OUTPUT_LEN: usize = 64;
 const LANES: usize = 25;
 const R_BYTES: usize = (LANES * 8) - (2 * OUTPUT_LEN);
+pub type State = [u64; 25];
 
-pub fn from(m: &[u8]) -> Digest {
+pub fn from(m: &[u8]) -> [u8; OUTPUT_LEN] {
     // Padding
     let mut size = R_BYTES * (m.len() as f64 / R_BYTES as f64).ceil() as usize;
     if size == m.len() {
@@ -40,7 +37,7 @@ pub fn from(m: &[u8]) -> Digest {
         }
     }
 
-    Digest(digest)
+    digest
 }
 
 pub fn keccak_f(a: &mut State) {
@@ -86,4 +83,21 @@ pub fn round_f(a: &mut State, round: usize) {
 
     // step ι
     a[0] ^= consts::ROUND_CONSTANTS[round];
+}
+
+pub trait XOR<T> {
+    fn xor_with(&mut self, _: T) -> &mut Self;
+}
+
+impl XOR<Vec<u8>> for State {
+    fn xor_with(&mut self, s: Vec<u8>) -> &mut Self {
+        debug_assert_eq!(s.len() % 8, 0);
+        for i in 0..(72 >> 3) {
+            self[i] ^= unsafe {
+                let ptr = s.as_ptr() as *const u64;
+                *(ptr.offset(i as isize))
+            };
+        }
+        self
+    }
 }

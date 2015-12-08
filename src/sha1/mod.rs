@@ -1,10 +1,8 @@
-use super::{Digest, OUTPUT_LEN};
-
+const OUTPUT_LEN: usize = 20;
+const R_BYTES: usize = 64;
 pub type State = [u32; 5];
 
-const R_BYTES: usize = 64;
-
-pub fn from(m: &[u8]) -> Digest {
+pub fn from(m: &[u8]) -> [u8; OUTPUT_LEN] {
     // Pre-processing
     let size = (R_BYTES as f32 * (((m.len() + 8) as f32 / R_BYTES as f32).ceil())) as usize;
     let mut p: Vec<u8> = Vec::with_capacity(size);
@@ -35,7 +33,7 @@ pub fn from(m: &[u8]) -> Digest {
             *output_ptr.offset(i as isize) = word;
         }
     }
-    Digest(digest)
+    digest
 }
 
 fn process_block(state: &mut State, block: &[u8]) {
