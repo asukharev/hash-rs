@@ -6,10 +6,7 @@ const R_BYTES: usize = 64;
 
 pub fn from(m: &[u8]) -> Digest {
     // Pre-processing
-    let size = match m.len() {
-        0 => R_BYTES,
-        _ => 2i32.pow((m.len() as f32).log2().ceil() as u32) as usize
-    };
+    let size = (R_BYTES as f32 * (((m.len() + 8) as f32 / R_BYTES as f32).ceil())) as usize;
     let mut p: Vec<u8> = Vec::with_capacity(size);
     p.extend(m.iter().map(|x| x.clone())); // Copy
     p.extend((0..size - m.len()).map(|_| 0)); // Padding
@@ -17,7 +14,8 @@ pub fn from(m: &[u8]) -> Digest {
     let ptr = p.as_mut_ptr() as *mut u64;
     let word = u64::to_be(m.len() as u64 * 8 as u64);
     unsafe {
-        *ptr.offset(7) = word;
+        let p = (p.len()/8 - 1) as isize;
+        *ptr.offset(p) = word;
     }
 
     // Initialization
