@@ -1,27 +1,30 @@
 use std::fmt;
-
-mod keccak;
 mod sha1;
+mod sha3;
 
-const OUTPUT_LEN: usize = 64;
-
-pub struct Digest(pub [u8; OUTPUT_LEN]);
+pub struct Digest(Vec<u8>);
 
 impl Digest {
-    pub fn keccak(m: &[u8]) -> Digest {
-        keccak::from(m)
+    pub fn sha1(m: &[u8]) -> Digest {
+        let a = sha1::from(m);
+        let mut digest: Vec<u8> = Vec::new();
+        digest.extend(a.iter().cloned());
+        Digest(digest)
     }
 
-    pub fn sha1(m: &[u8]) -> Digest {
-        sha1::from(m)
+    pub fn sha3(m: &[u8]) -> Digest {
+        let a = sha3::from(m);
+        let mut digest: Vec<u8> = Vec::new();
+        digest.extend(a.iter().cloned());
+        Digest(digest)
     }
 }
 
 impl Clone for Digest {
-    fn clone(&self) -> Self { *self }
+    fn clone(&self) -> Self {
+        Digest(self.0.clone())
+    }
 }
-
-impl Copy for Digest {}
 
 impl fmt::LowerHex for Digest {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

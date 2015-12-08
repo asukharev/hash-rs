@@ -12,7 +12,7 @@ fn check_384(input: &str, output: &str) {
 }
 
 fn check_512(input: &str, output: &str) {
-    let digest = hash::Digest::keccak(&input.as_bytes());
+    let digest = hash::Digest::sha3(&input.as_bytes());
     assert_eq!(format!("{}", digest), output);
 }
 
@@ -34,7 +34,7 @@ fn known_512_digests() {
 }
 
 fn check_sha1(input: &str, output: &str) {
-    let digest = hash::Digest::sha1(&input.as_bytes());
+    let digest = hash::Digest::sha1(input.as_bytes());
     assert_eq!(format!("{}", digest), output);
 }
 
@@ -45,4 +45,5 @@ fn known_sha1_digests() {
     check_sha1("", "da39a3ee5e6b4b0d3255bfef95601890afd80709");
     check_sha1("testing\n", "9801739daae44ec5293d4e1f53d3f4d2d426d91c");
     check_sha1("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "025ecbd5d70f8fb3c5457cd96bab13fda305dc59");
+    check_sha1("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "956a4ea9812940d46745e590ae00897d20c7ad0a");
 }
