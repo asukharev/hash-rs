@@ -20,31 +20,11 @@ impl Digest {
     }
 }
 
-// impl<'a> From<&'a str> for Digest {
-//     fn from(m: &str) -> Self {
-//         let a = sha1::from(m.as_bytes());
-//         let mut digest: Vec<u8> = Vec::new();
-//         digest.extend(a.iter().cloned());
-//         Digest(digest)
-//     }
-// }
-//
-// impl<'a> From<&'a [u8]> for Digest {
-//     fn from(m: &[u8]) -> Self {
-//         let a = sha1::from(m);
-//         let mut digest: Vec<u8> = Vec::new();
-//         digest.extend(a.iter().cloned());
-//         Digest(digest)
-//     }
-// }
-
 impl Clone for Digest {
     fn clone(&self) -> Self {
         Digest(self.0.clone())
     }
 }
-
-// impl Copy for Digest {}
 
 impl fmt::LowerHex for Digest {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
