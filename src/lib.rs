@@ -18,6 +18,10 @@ impl Digest {
         digest.extend(a.iter().cloned());
         Digest(digest)
     }
+
+    pub fn as_vec(&self) -> Vec<u8> {
+        self.0.clone()
+    }
 }
 
 impl Clone for Digest {
